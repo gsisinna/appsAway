@@ -1,0 +1,58 @@
+version: "3.7"
+
+x-icub-test: &icub-test
+  image: icubteamcode/superbuild-icubtest:master-unstable_sources
+  environment:
+    - DISPLAY=${DISPLAY}
+    - QT_X11_NO_MITSHM=1
+    - XAUTHORITY=/root/.Xauthority
+    - YARP_FORWARD_LOG_ENABLE=1
+    - YARP_ROBOT_NAME
+  volumes:
+    - "/tmp/.X11-unix:/tmp/.X11-unix"
+    - "${XAUTHORITY}:/root/.Xauthority"
+    - "/home/icub/.config/yarp:/root/.config/yarp"
+    - "/home/icub/icub-test_results:/projects/robotology-superbuild/src/icub-tests/suites/results"
+  networks:
+    - hostnet
+
+services:
+  yserver:
+    <<: *icub-test
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: on-failure
+    command: sh -c "yarp where | grep 'is available at ip' > /dev/null ; if [ ! $$? -eq 0 ]; then yarpserver --read; fi"
+
+  test-suite:
+    <<: *icub-test
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: none
+    command: sh -c "cd projects/robotology-superbuild/src/icub-tests/suites && robottestingframework-testrunner -v -s encoders-icub.xml"
+
+
+#------------------------------------------------------------------------------------------------
+
+
+
+  #use network.peer ip address and port 8080 to see the containers status in browser (http://localhost:8080/)
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  hostnet:
+    external: true
+    name: host
+

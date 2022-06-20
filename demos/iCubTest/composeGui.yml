@@ -1,0 +1,27 @@
+version: "3.7"
+
+x-icub-test: &icub-test
+  image: icubteamcode/superbuild-icubtest:master-unstable_sources
+  environment:
+    - DISPLAY=${DISPLAY}
+    - QT_X11_NO_MITSHM=1
+    - XAUTHORITY=/root/.Xauthority
+    - YARP_FORWARD_LOG_ENABLE=1
+    - YARP_ROBOT_NAME
+  volumes:
+    - "/tmp/.X11-unix:/tmp/.X11-unix"
+    - "${XAUTHORITY}:/root/.Xauthority"
+    - "/home/icub/.config/yarp:/root/.config/yarp"
+    - "/home/icub/icub-test_results:/projects/robotology-superbuild/src/icub-tests/suites/results"
+  network_mode: "host"
+  privileged: true
+  #ipc: host
+
+
+services:
+
+  ylogger:
+    <<: *icub-test
+    command: sh -c "if [ -f "/root/.config/yarp/yarp_namespace.conf" ]; then yarp wait $$(echo $$(cat /root/.config/yarp/yarp_namespace.conf)); else yarp wait /root; fi; yarplogger --start"
+
+
