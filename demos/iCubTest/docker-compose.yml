@@ -12,6 +12,7 @@ x-icub-test: &icub-test
     - "/tmp/.X11-unix:/tmp/.X11-unix"
     - "${XAUTHORITY}:/root/.Xauthority"
     - "/home/icub/.config/yarp:/root/.config/yarp"
+    - "/home/icub/icub-test_results:/projects/robotology-superbuild/src/icub-tests/suites/results"
   network_mode: "host"
   privileged: true
   #ipc: host
@@ -38,7 +39,7 @@ x-icub-test: &icub-test
 services:
   yarp-server:
     <<: *icub-test
-    command: sh -c "yarpserver --write"
+    command: sh -c "yarp where | grep 'is available at ip' > /dev/null ; if [ ! $$? -eq 0 ]; then yarpserver --read; fi"
 
   # icub-sim:
   #   <<: *yarp-gazebo
