@@ -11,8 +11,8 @@ x-icub-test: &icub-test
   volumes:
     - "/tmp/.X11-unix:/tmp/.X11-unix"
     - "${XAUTHORITY}:/root/.Xauthority"
-    - "/home/icub/.config/yarp:/root/.config/yarp"
-    - "/home/icub/icub-test_results:/projects/robotology-superbuild/src/icub-tests/suites/results"
+    - "${HOME}/${YARP_CONF_PATH}:/root/.config/yarp"
+    - "${HOME}/icub-test_results:/projects/robotology-superbuild/src/icub-tests/suites/results:rw"
   network_mode: "host"
   privileged: true
   #ipc: host
