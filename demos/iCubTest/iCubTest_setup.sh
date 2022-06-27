@@ -9,11 +9,11 @@ then
   echo "" 
   exit 1 
 fi 
-if [ -d "appsAway" ] 
-then
-  rm -rf appsAway
-fi
-git clone --depth=1 --branch master https://github.com/gsisinna/appsAway.git --quiet 
+# if [ -d "appsAway" ] 
+# then
+#   rm -rf appsAway
+# fi
+#git clone --depth=1 --branch master https://github.com/gsisinna/appsAway.git --quiet 
 
 cd ./appsAway/scripts
 echo "#! /bin/bash
@@ -22,17 +22,15 @@ export APPSAWAY_APP_NAME=iCubTest
 export APPSAWAY_USER_NAME=icub
 export APPSAWAY_APP_PATH=\${HOME}/iCubApps/\${APPSAWAY_APP_NAME}
 export APPSAWAY_APP_PATH_NOT_CONSOLE=iCubApps/\${APPSAWAY_APP_NAME}
-export APPSAWAY_ICUBHEADNODE_ADDR=10.0.0.2
-export APPSAWAY_ICUBHEADNODE_USERNAME=icub
-export APPSAWAY_CONSOLENODE_ADDR=10.0.0.1
+export APPSAWAY_CONSOLENODE_ADDR=10.0.0.130
 export APPSAWAY_CONSOLENODE_USERNAME=icub
-export APPSAWAY_NODES_NAME_LIST=\"icubhead icubconsole\"
-export APPSAWAY_YML_IMAGES=\"icubteamcode/superbuild-icubtest icubteamcode/superbuild-icubtest icubteamcode/superbuild-icubhead\"
-export APPSAWAY_IMAGES=\"icubteamcode/superbuild-icubtest icubteamcode/superbuild-icubtest icubteamcode/superbuild-icubhead\"
-export APPSAWAY_VERSIONS=\"master-unstable master-unstable v2022.02.0\"
-export APPSAWAY_YARP_VERSIONS=\"LATEST LATEST LATEST\"
-export APPSAWAY_ICUB_FIRMWARE_SHARED_VERSION=\"LATEST LATEST LATEST\"
-export APPSAWAY_TAGS=\"sources sources sources\"
+export APPSAWAY_NODES_NAME_LIST=\"icubconsole\"
+export APPSAWAY_YML_IMAGES=\"icubteamcode/superbuild-icubtest\"
+export APPSAWAY_IMAGES=\"icubteamcode/superbuild-icubtest\"
+export APPSAWAY_VERSIONS=\"master-unstable\"
+export APPSAWAY_YARP_VERSIONS=\"LATEST\"
+export APPSAWAY_ICUB_FIRMWARE_SHARED_VERSION=\"LATEST\"
+export APPSAWAY_TAGS=\"sources\"
 export APPSAWAY_SENSORS=\"/dev/ttyUSB0\"
 export APPSAWAY_GUI_YAML_FILE_LIST=composeGui.yml
 export APPSAWAY_HEAD_YAML_FILE_LIST=composeHead.yml

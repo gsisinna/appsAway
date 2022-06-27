@@ -26,14 +26,14 @@ services:
         condition: on-failure
     command: sh -c "yarp where | grep 'is available at ip' > /dev/null ; if [ ! $$? -eq 0 ]; then yarpserver --read; fi"
 
-  test-suite:
-    <<: *icub-test
-    deploy:
-      placement:
-        constraints: [node.role == manager]
-      restart_policy:
-        condition: none
-    command: sh -c "cd projects/robotology-superbuild/src/icub-tests/suites && robottestingframework-testrunner -v -s encoders-icub.xml"
+  # test-suite:
+  #   <<: *icub-test
+  #   deploy:
+  #     placement:
+  #       constraints: [node.role == manager]
+  #     restart_policy:
+  #       condition: none
+  #   command: sh -c "cd projects/robotology-superbuild/src/icub-tests/suites && robottestingframework-testrunner -v -s encoders-icub.xml"
 
 
 #------------------------------------------------------------------------------------------------
