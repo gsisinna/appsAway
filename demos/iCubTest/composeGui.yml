@@ -26,4 +26,4 @@ services:
 
   test-suite:
     <<: *icub-test
-    command: sh -c "cd projects/robotology-superbuild/src/icub-tests/suites && robottestingframework-testrunner -v -t OpticalEncodersDrift.so -p "--robot ""icub"" --part ""left_arm"" --joints ""(2)"" --home ""(0)"" --speed ""(20)"" --max ""(10)"" --min ""(-10)"" --cycles 100 --tolerance 1.0 "
+    command: sh -c "cd projects/robotology-superbuild/src/icub-tests/suites && robottestingframework-testrunner -v -t OpticalEncodersDrift.so -p "--robot ""icub"" --part ""left_arm"" --joints ""(2)"" --home ""(0)"" --speed ""(20)"" --max ""(10)"" --min ""(-10)"" --cycles 100 --tolerance 1.0 --plot_enabled 1 "
