@@ -26,6 +26,7 @@ services:
         condition: on-failure
     command: sh -c "yarp where | grep 'is available at ip' > /dev/null ; if [ ! $$? -eq 0 ]; then yarpserver --read; fi"
 
+  ## Iserted in composeGui.yml 
   # test-suite:
   #   <<: *icub-test
   #   deploy:
