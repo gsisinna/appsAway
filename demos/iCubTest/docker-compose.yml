@@ -45,6 +45,12 @@ services:
     <<: *yarp-gazebo
     command: sh -c "iCub_SIM"
 
+  ## UNCOMMENT THIS SERVICE TO USE THE SIMULATOR AND RUN THE ENDOERS-ICUBSIM TESTING SUITE ##
+  # test-suite:
+  #   <<: *icub-test
+  #   command: sh -c "cd projects/robotology-superbuild/src/icub-tests/suites && robottestingframework-testrunner -v -s encoders-icubSim.xml"
+
+  ## UNCOMMENT THIS SERVICE TO USE THE REAL ROBOT AND RUN THE ENDOERS-ICUB TESTING SUITE ##
   test-suite:
     <<: *icub-test
-    command: sh -c "cd projects/robotology-superbuild/src/icub-tests/suites && robottestingframework-testrunner -v -s encoders-icubSim.xml"
+    command: sh -c "cd projects/robotology-superbuild/src/icub-tests/suites && robottestingframework-testrunner -v -s encoders-icub.xml"
