@@ -24,18 +24,22 @@ services:
     <<: *icub-test
     command: sh -c "if [ -f "/root/.config/yarp/yarp_namespace.conf" ]; then yarp wait $$(echo $$(cat /root/.config/yarp/yarp_namespace.conf)); else yarp wait /root; fi; yarplogger --start"
 
+  # test-suite:
+  #   <<: *icub-test
+  #   command: sh -c "cd projects/robotology-superbuild/src/icub-tests/suites && \
+  #                   robottestingframework-testrunner -v \
+  #                   -t OpticalEncodersDrift.so -p \
+  #                   "--robot icub \
+  #                   --part ${ROBOT_PART} \
+  #                   --joints ""${JOINTS}"" \
+  #                   --home ""${HOME}"" \
+  #                   --speed ""${SPEED}"" \
+  #                   --max ""${MAX}"" \
+  #                   --min ""${MIN}"" \
+  #                   --cycles ${CYCLES} \
+  #                   --tolerance ${TOLERANCE} \
+  #                   --plot_enabled ${PLOT_ENABLED} "
+
   test-suite:
     <<: *icub-test
-    command: sh -c "cd projects/robotology-superbuild/src/icub-tests/suites && \
-                    robottestingframework-testrunner -v \
-                    -t OpticalEncodersDrift.so -p \
-                    "--robot icub \
-                    --part ${ROBOT_PART} \
-                    --joints ""${JOINTS}"" \
-                    --home ""${HOME}"" \
-                    --speed ""${SPEED}"" \
-                    --max ""${MAX}"" \
-                    --min ""${MIN}"" \
-                    --cycles ${CYCLES} \
-                    --tolerance ${TOLERANCE} \
-                    --plot_enabled ${PLOT_ENABLED} "
+    command: sh -c "yarp wait /icub/torso/state:o; yarp wait /icub/head/state:o; yarp wait /icub/left_arm/state:o; yarp wait /icub/right_arm/state:o; yarp wait /icub/left_leg/state:o; yarp wait /icub/right_leg/state:o; cd projects/robotology-superbuild/src/icub-tests/suites; robottestingframework-testrunner -v -s encoders-icub.xml"
