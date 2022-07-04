@@ -11,12 +11,14 @@ x-icub-test: &icub-test
     - SUITE_TYPE
     - CUSTOM_SUITE
     - SUITE_PATH
-    - SAVING_PATH
+    - RESULTS_PATH
   volumes:
     - "/tmp/.X11-unix:/tmp/.X11-unix"
     - "${XAUTHORITY}:/root/.Xauthority"
     - "${HOME}/${YARP_CONF_PATH}:/root/.config/yarp"
-    - "${HOME}/icub-test_results:/projects/robotology-superbuild/src/icub-tests/suites/results:rw"
+    - "${RESULTS_PATH:-/tmp/empty-dir}:/projects/robotology-superbuild/src/icub-tests/suites/results:rw"
+    - "${SUITE_PATH}:/projects/robotology-superbuild/src/icub-tests/suites"
+
   network_mode: "host"
   privileged: true
   #ipc: host
@@ -30,8 +32,4 @@ services:
 
   test-suite:
     <<: *icub-test
-    command: sh -c "cd projects/robotology-superbuild/src/icub-tests/suites; yarp wait /icub/torso/state:o; yarp wait /icub/head/state:o; yarp wait /icub/left_arm/state:o; yarp wait /icub/right_arm/state:o; yarp wait /icub/left_leg/state:o; yarp wait /icub/right_leg/state:o; robottestingframework-testrunner -v -s ${SUITE_TYPE}; "
-
-  # test-suite:
-  #   <<: *icub-test
-  #   command: sh -c "yarp wait /icub/torso/state:o; yarp wait /icub/head/state:o; yarp wait /icub/left_arm/state:o; yarp wait /icub/right_arm/state:o; yarp wait /icub/left_leg/state:o; yarp wait /icub/right_leg/state:o; cd projects/robotology-superbuild/src/icub-tests/suites; robottestingframework-testrunner -v -s encoders-icub.xml"
+    command: sh -c "cd projects/robotology-superbuild/src/icub-tests/suites; yarp wait /icub/torso/state:o; yarp wait /icub/head/state:o; yarp wait /icub/left_arm/state:o; yarp wait /icub/right_arm/state:o; yarp wait /icub/left_leg/state:o; yarp wait /icub/right_leg/state:o; if [ ${CUSTOM_SUITE} = true ]; then robottestingframework-testrunner -v -s ${SUITE_PATH}; else robottestingframework-testrunner -v -s ${SUITE_TYPE}; fi;"
