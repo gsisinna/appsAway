@@ -8,10 +8,6 @@ x-icub-test: &icub-test
     - XAUTHORITY=/root/.Xauthority
     - YARP_FORWARD_LOG_ENABLE=1
     - YARP_ROBOT_NAME
-    - SUITE_TYPE
-    - CUSTOM_SUITE
-    - SUITE_PATH
-    - RESULTS_PATH
   volumes:
     - "/tmp/.X11-unix:/tmp/.X11-unix"
     - "${XAUTHORITY}:/root/.Xauthority"

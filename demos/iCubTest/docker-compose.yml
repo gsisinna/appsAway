@@ -45,12 +45,12 @@ services:
     <<: *yarp-gazebo
     command: sh -c "if [ -f "/root/.config/yarp/yarp_namespace.conf" ]; then yarp wait $$(echo $$(cat /root/.config/yarp/yarp_namespace.conf)); else yarp wait /root; fi; iCub_SIM"
 
-  ## UNCOMMENT THIS SERVICE TO USE THE SIMULATOR AND RUN THE ENDOERS-ICUBSIM TESTING SUITE ##
+  ## UNCOMMENT THIS SERVICE TO USE THE SIMULATOR AND RUN THE ENCODERS-ICUBSIM TESTING SUITE ##
   test-suite:
     <<: *icub-test
     command: sh -c "yarp wait /icubSim/torso/state:o; yarp wait /icubSim/head/state:o; yarp wait /icubSim/left_arm/state:o; yarp wait /icubSim/right_arm/state:o; yarp wait /icubSim/left_leg/state:o; yarp wait /icubSim/right_leg/state:o; cd projects/robotology-superbuild/src/icub-tests/suites;  robottestingframework-testrunner -v -s encoders-icubSim.xml"
 
-  ## UNCOMMENT THIS SERVICE TO USE THE REAL ROBOT AND RUN THE ENDOERS-ICUB TESTING SUITE ##
+  ## UNCOMMENT THIS SERVICE TO USE THE REAL ROBOT AND RUN THE ENCODERS-ICUB TESTING SUITE ##
   #test-suite:
   #  <<: *icub-test
   #  command: sh -c "cd projects/robotology-superbuild/src/icub-tests/suites && robottestingframework-testrunner -v -s encoders-icub.xml"
