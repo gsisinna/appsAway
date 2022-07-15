@@ -1,39 +1,39 @@
 #! /bin/bash
-# _NUM_APPS=$( ps aux | grep -c ./appGUI ) 
-# if (( $_NUM_APPS > 1 )) 
-# then 
-#   echo -e "\033[1;33m$(date +%d-%m-%Y) - $(date +%H:%M:%S) WARNING : An application is already running in your machine, please make sure you close it before launching a new one.\033[0m" 
-#   echo -e "\033[1;33m$(date +%d-%m-%Y) - $(date +%H:%M:%S) WARNING : If you stopped an old application but it is still hanging, run the following command: \033[0m" 
-#   echo "" 
-#   echo "cd $HOME/teamcode/appsAway/scripts && ./appsAway_cleanupCluster.sh all" 
-#   echo "" 
-#   exit 1 
-# fi 
+_NUM_APPS=$( ps aux | grep -c ./appGUI ) 
+if (( $_NUM_APPS > 1 )) 
+then 
+  echo -e "\033[1;33m$(date +%d-%m-%Y) - $(date +%H:%M:%S) WARNING : An application is already running in your machine, please make sure you close it before launching a new one.\033[0m" 
+  echo -e "\033[1;33m$(date +%d-%m-%Y) - $(date +%H:%M:%S) WARNING : If you stopped an old application but it is still hanging, run the following command: \033[0m" 
+  echo "" 
+  echo "cd $HOME/teamcode/appsAway/scripts && ./appsAway_cleanupCluster.sh all" 
+  echo "" 
+  exit 1 
+fi 
 # if [ -d "appsAway" ] 
 # then
 #   rm -rf appsAway
 # fi
-#git clone --depth=1 --branch master https://github.com/gsisinna/appsAway.git --quiet 
+# git clone --depth=1 --branch master https://github.com/icub-tech-iit/appsAway.git --quiet 
 
 cd ./appsAway/scripts
 echo "#! /bin/bash
-export ROBOT_NAME=iCubErzelli02
+export ROBOT_NAME=iCubGenova11
 export APPSAWAY_APP_NAME=iCubTest
 export APPSAWAY_USER_NAME=icub
 export APPSAWAY_APP_PATH=\${HOME}/iCubApps/\${APPSAWAY_APP_NAME}
 export APPSAWAY_APP_PATH_NOT_CONSOLE=iCubApps/\${APPSAWAY_APP_NAME}
 export APPSAWAY_ICUBHEADNODE_ADDR=10.0.0.2
 export APPSAWAY_ICUBHEADNODE_USERNAME=icub
-export APPSAWAY_CONSOLENODE_ADDR=10.0.0.130
+export APPSAWAY_CONSOLENODE_ADDR=10.0.0.1
 export APPSAWAY_CONSOLENODE_USERNAME=icub
 export APPSAWAY_NODES_NAME_LIST=\"icubhead icubconsole\"
-export APPSAWAY_YML_IMAGES=\"icubteamcode/superbuild-icubhead icubteamcode/superbuild-icubtest\"
-export APPSAWAY_IMAGES=\"icubteamcode/superbuild-icubhead test_icubtest001\"
-export APPSAWAY_VERSIONS=\"v2022.02.1 n/a\"
+export APPSAWAY_YML_IMAGES=\"icubtest_sn50_002 icubteamcode/superbuild-icubhead\"
+export APPSAWAY_IMAGES=\"icubtest_sn50_002 icubteamcode/superbuild-icubhead\"
+export APPSAWAY_VERSIONS=\"n/a v2022.05.2\"
 export APPSAWAY_YARP_VERSIONS=\"LATEST LATEST\"
 export APPSAWAY_ICUB_FIRMWARE_SHARED_VERSION=\"LATEST LATEST\"
-export APPSAWAY_TAGS=\"sources latest\"
-export APPSAWAY_SENSORS=\"/dev/ttyUSB0\"
+export APPSAWAY_TAGS=\"latest sources\"
+export APPSAWAY_SENSORS=\"/dev/icub-i2c-imu\"
 export APPSAWAY_GUI_YAML_FILE_LIST=composeGui.yml
 export APPSAWAY_HEAD_YAML_FILE_LIST=composeHead.yml
 export APPSAWAY_DEPLOY_YAML_FILE_LIST=main.yml

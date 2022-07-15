@@ -1,7 +1,7 @@
 version: "3.7"
 
 x-icub-test: &icub-test
-  image: icubteamcode/superbuild-icubtest:master-unstable_sources
+  image: icubtest_sn50_002:latest
   environment:
     - DISPLAY=${DISPLAY}
     - QT_X11_NO_MITSHM=1
@@ -31,5 +31,5 @@ services:
 
   test-suite:
     <<: *icub-test
-    command: sh -c "cd projects/robotology-superbuild/src/icub-tests/suites; yarp wait /icub/torso/state:o; yarp wait /icub/head/state:o; yarp wait /icub/left_arm/state:o; yarp wait /icub/right_arm/state:o; yarp wait /icub/left_leg/state:o; yarp wait /icub/right_leg/state:o; if [ ${CUSTOM_SUITE} = true ]; then robottestingframework-testrunner -v -s customSuite.xml; else robottestingframework-testrunner -v -s ${SUITE_TYPE}; fi; sleep infinity;"
+    command: sh -c "checkRobotInterface; cd /projects/robotology-superbuild/src/icub-tests/suites; yarp wait /icub/head/state:o; yarp wait /icub/left_arm/state:o; yarp wait /icub/right_arm/state:o; if [ ${CUSTOM_SUITE} = true ]; then robottestingframework-testrunner -v -s customSuite.xml; else robottestingframework-testrunner -v -s ${SUITE_TYPE}; fi; sleep infinity;"
   # command: sh -c "cd projects/robotology-superbuild/src/icub-tests/suites; yarp wait /icub/torso/state:o; yarp wait /icub/head/state:o; yarp wait /icub/left_arm/state:o; yarp wait /icub/right_arm/state:o; yarp wait /icub/left_leg/state:o; yarp wait /icub/right_leg/state:o; if [ ${CUSTOM_SUITE} = true ]; then robottestingframework-testrunner -v -s ${CUSTOM_FILE_PATH}; echo ${CUSTOM_FILE_PATH}; else robottestingframework-testrunner -v -s ${SUITE_TYPE}; fi;"
